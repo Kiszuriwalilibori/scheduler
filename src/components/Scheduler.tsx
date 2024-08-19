@@ -4,11 +4,14 @@ import { AppointmentModel, ChangeSet, EditingState, IntegratedEditing, ViewState
 import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Scheduler, DayView, Appointments, WeekView, ViewSwitcher, Toolbar, MonthView, AppointmentTooltip } from "@devexpress/dx-react-scheduler-material-ui";
 
 import { useManageCurrentDate, useAddAppointment, useSubscribeAppointments } from "hooks";
+import useRemoveAppointment from "hooks/useRemoveAppointment";
 
 const WellMarketingScheduler = () => {
     const { currentDate, setDate } = useManageCurrentDate();
     const appointments = useSubscribeAppointments();
     const initAddAppointment = useAddAppointment();
+    const initRemoveAppointment = useRemoveAppointment();
+
     console.log(appointments);
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
@@ -18,6 +21,7 @@ const WellMarketingScheduler = () => {
         if (changed) {
         }
         if (deleted !== undefined) {
+            initRemoveAppointment(deleted.toString());
         }
     };
     if (!appointments) {

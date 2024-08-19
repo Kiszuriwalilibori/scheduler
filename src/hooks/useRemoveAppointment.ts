@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 
-import addAppointment from "fbase/addAppointment";
+import removeAppointment from "fbase/removeAppointment";
 import useMessage from "./useMessage";
 import { useLoaderStore } from "store";
 
-export const useAddAppointment = () => {
-    const [added, setAdded] = useState<null | AppointmentModel>(null);
+export const useRemoveAppointment = () => {
+    const [removed, setRemoved] = useState<null | string>(null);
     const showMessage = useMessage();
     const closeLoader = useLoaderStore.use.closeLoader();
     const openLoader = useLoaderStore.use.openLoader();
-
-    const initAddAppointment = useCallback((data: AppointmentModel) => {
-        setAdded(data);
+    const initRemoveAppointment = useCallback((id: string) => {
+        setRemoved(id);
     }, []);
 
     const handleError = useCallback((err: any) => {
@@ -28,10 +27,10 @@ export const useAddAppointment = () => {
     }, []);
 
     useEffect(() => {
-        if (added) {
-            addAppointment(added, handleError, handleSuccess, handleInit);
+        if (removed) {
+            removeAppointment(removed, handleError, handleSuccess, handleInit); // generalnie model powinien być zawężony do stringa
         }
-    }, [added]);
-    return initAddAppointment;
+    }, [removed]);
+    return initRemoveAppointment;
 };
-export default useAddAppointment;
+export default useRemoveAppointment;

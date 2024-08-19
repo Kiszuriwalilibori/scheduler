@@ -1,11 +1,9 @@
-import { getFirestore, doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "fbase";
 
-import { firebase_app } from "fbase";
-
-const db = getFirestore(firebase_app);
-
-export default async function removeAppointment(ID: string, handleSuccess: Function, handleError: Function) {
+export default async function removeAppointment(ID: string, handleSuccess: Function, handleError: Function, handleInit: Function) {
     try {
+        handleInit();
         await deleteDoc(doc(db, "appointments", ID)).then(handleSuccess());
     } catch (e) {
         handleError(e);
