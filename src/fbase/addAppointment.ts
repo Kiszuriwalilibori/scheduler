@@ -1,12 +1,11 @@
-import { getFirestore, doc, setDoc } from "firebase/firestore";
-
-import { firebase_app } from "fbase";
+import { doc, setDoc } from "firebase/firestore";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 
-const db = getFirestore(firebase_app);
+import { db } from "fbase";
 
 export async function addAppointment(data: AppointmentModel, handleError: Function, handleSuccess: Function, handleInit: Function) {
     const id = Number(new Date()).toString();
+
     try {
         handleInit();
         await setDoc(doc(db, "appointments", id), data, {

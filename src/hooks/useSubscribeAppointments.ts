@@ -20,7 +20,7 @@ export const useSubscribeAppointments = () => {
     error && showMessage.error(error.message ? error.message : JSON.stringify(error));
     const appointments = value
         ? value.docs.map(doc => {
-              return appointmentConverter.fromFirestore(doc.data());
+              return appointmentConverter.fromFirestore(doc.data(), doc.id);
           })
         : null; /// todo nie wiadomo czy null jest najleps\ym.
 

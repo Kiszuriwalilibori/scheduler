@@ -18,8 +18,9 @@ export const appointmentConverter = {
         return { ...appointment, startDate: dateToTimestamp(appointment.startDate), endDate: appointment.endDate ? dateToTimestamp(appointment.endDate) : appointment.endDate, exDate: appointment.exDate ? dateToTimestamp(appointment.exDate) : appointment.exDate };
     },
 
-    fromFirestore(appointment: DocumentData): AppointmentModel {
+    fromFirestore(appointment: DocumentData, id: number | string): AppointmentModel {
         const convertedAppointment = { ...appointment };
+        convertedAppointment.id = id;
         for (const field in convertedAppointment) {
             if (isTimestamp(convertedAppointment[field])) {
                 const convertedDate = dateFromTimestamp(convertedAppointment[field]);
