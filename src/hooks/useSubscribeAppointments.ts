@@ -23,7 +23,7 @@ export const useSubscribeAppointments = () => {
         ? value.docs.map(doc => {
               return appointmentConverter.fromFirestore(doc.data(), doc.id);
           })
-        : null; /// todo nie wiadomo czy null jest najleps\ym.
+        : undefined;
 
     return appointments;
 };

@@ -3,9 +3,8 @@ import Paper from "@mui/material/Paper";
 import { AppointmentModel, ChangeSet, EditingState, IntegratedEditing, ViewState } from "@devexpress/dx-react-scheduler";
 import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Scheduler, DayView, Appointments, WeekView, ViewSwitcher, Toolbar, MonthView, AppointmentTooltip } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { useManageCurrentDate, useAddAppointment, useSubscribeAppointments, useUpdateAppointment } from "hooks";
-import useRemoveAppointment from "hooks/useRemoveAppointment";
-import { useConnectionStatusStore } from "store/index";
+import { useManageCurrentDate, useAddAppointment, useRemoveAppointment, useSubscribeAppointments, useUpdateAppointment } from "hooks";
+import { useConnectionStatusStore } from "store";
 
 const LOCALE = "pl-PL";
 
@@ -13,19 +12,19 @@ const WellMarketingScheduler = () => {
     const { currentDate, setDate } = useManageCurrentDate();
     const isOnline = useConnectionStatusStore.use.isOnline();
     const appointments = useSubscribeAppointments();
-    const initAddAppointment = useAddAppointment();
-    const initRemoveAppointment = useRemoveAppointment();
-    const initUpdateAppointment = useUpdateAppointment();
+    const addAppointment = useAddAppointment();
+    const removeAppointment = useRemoveAppointment();
+    const updateAppointment = useUpdateAppointment();
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
         if (added && isOnline) {
-            initAddAppointment(added as AppointmentModel);
+            addAppointment(added as AppointmentModel);
         }
         if (changed && isOnline) {
-            initUpdateAppointment(changed);
+            updateAppointment(changed);
         }
         if (deleted && isOnline) {
-            initRemoveAppointment(deleted.toString());
+            removeAppointment(deleted.toString());
         }
     };
     if (!appointments) {
