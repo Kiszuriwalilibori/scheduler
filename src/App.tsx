@@ -1,4 +1,4 @@
-import { Scheduler, Loader } from "components";
+import { Scheduler, Loader, Header } from "components";
 import useHandleConnectionStatus from "hooks/useHandleConnectionStatus";
 
 function App() {
@@ -6,6 +6,7 @@ function App() {
 
     return (
         <>
+            <Header />
             <Scheduler />
             <Loader />
         </>

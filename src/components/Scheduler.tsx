@@ -24,7 +24,7 @@ const WellMarketingScheduler = () => {
         if (changed && isOnline) {
             initUpdateAppointment(changed);
         }
-        if (deleted !== undefined && isOnline) {
+        if (deleted && isOnline) {
             initRemoveAppointment(deleted.toString());
         }
     };
@@ -34,7 +34,7 @@ const WellMarketingScheduler = () => {
 
     return (
         <Paper>
-            <Scheduler data={appointments} locale={LOCALE}>
+            <Scheduler firstDayOfWeek={1} data={appointments} locale={LOCALE}>
                 <ViewState currentDate={currentDate} onCurrentDateChange={setDate} />
                 <EditingState onCommitChanges={handleChanges} />
                 <IntegratedEditing />
