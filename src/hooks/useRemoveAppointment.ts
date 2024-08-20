@@ -27,7 +27,7 @@ export const useRemoveAppointment = () => {
 
     useEffect(() => {
         if (removed) {
-            removeAppointment(removed, handleError, handleSuccess, handleInit); /// todo generalnie model powinien być zawężony do stringa
+            removeAppointment(removed, handleError, handleSuccess, handleInit);
         }
     }, [removed]);
     return initRemoveAppointment;
