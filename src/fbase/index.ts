@@ -2,5 +2,6 @@ import database from "./config";
 import appointmentConverter from "./converter";
 import removeAppointment from "./removeAppointment";
 import updateAppointment from "./updateAppointment";
+import addAppointment from "./addAppointment";
 
-export { appointmentConverter, removeAppointment, updateAppointment, database };
+export { addAppointment, appointmentConverter, database, removeAppointment, updateAppointment };

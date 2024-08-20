@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 
-import addAppointment from "fbase/addAppointment";
+import { addAppointment } from "fbase";
 import { useMessage } from "hooks";
 import { useLoaderStore } from "store";
 
