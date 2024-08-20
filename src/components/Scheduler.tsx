@@ -5,31 +5,36 @@ import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Sche
 
 import { useManageCurrentDate, useAddAppointment, useSubscribeAppointments, useUpdateAppointment } from "hooks";
 import useRemoveAppointment from "hooks/useRemoveAppointment";
+import { useConnectionStatusStore } from "store/index";
+
+const LOCALE = "pl-PL";
 
 const WellMarketingScheduler = () => {
     const { currentDate, setDate } = useManageCurrentDate();
+    const isOnline = useConnectionStatusStore.use.isOnline();
     const appointments = useSubscribeAppointments();
     const initAddAppointment = useAddAppointment();
     const initRemoveAppointment = useRemoveAppointment();
     const initUpdateAppointment = useUpdateAppointment();
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
-        if (added) {
+        if (added && isOnline) {
             initAddAppointment(added as AppointmentModel);
         }
-        if (changed) {
+        if (changed && isOnline) {
             initUpdateAppointment(changed);
         }
-        if (deleted !== undefined) {
+        if (deleted !== undefined && isOnline) {
             initRemoveAppointment(deleted.toString());
         }
     };
     if (!appointments) {
         return null;
     }
+
     return (
         <Paper>
-            <Scheduler data={appointments} locale="pl-PL">
+            <Scheduler data={appointments} locale={LOCALE}>
                 <ViewState currentDate={currentDate} onCurrentDateChange={setDate} />
                 <EditingState onCommitChanges={handleChanges} />
                 <IntegratedEditing />
@@ -42,7 +47,7 @@ const WellMarketingScheduler = () => {
                 <TodayButton />
                 <Appointments />
                 <CurrentTimeIndicator shadePreviousAppointments={true} shadePreviousCells={true} />
-                <AppointmentTooltip showOpenButton showDeleteButton />
+                <AppointmentTooltip showOpenButton={isOnline} showDeleteButton={isOnline} />
                 <AppointmentForm />
             </Scheduler>
         </Paper>
@@ -50,8 +55,3 @@ const WellMarketingScheduler = () => {
 };
 
 export default WellMarketingScheduler;
-
-// const x = new Date().toString();
-// console.log(x);
-// const y = Number(new Date(x));
-// console.log(y);

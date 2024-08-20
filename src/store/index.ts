@@ -1,3 +1,4 @@
+import { useConnectionStatusStore } from "./setConnectionStatus";
 import { useLoaderStore } from "./setLoader";
 
-export { useLoaderStore };
+export { useConnectionStatusStore, useLoaderStore };

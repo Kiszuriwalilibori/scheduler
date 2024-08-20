@@ -7,7 +7,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             maxSnack={3}
             anchorOrigin={{
                 vertical: "top",
-                horizontal: "left",
+                horizontal: "center",
             }}
         >
             {children}
