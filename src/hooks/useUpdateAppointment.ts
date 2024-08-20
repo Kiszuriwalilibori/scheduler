@@ -1,18 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
-import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 
-import addAppointment from "fbase/addAppointment";
+import { updateAppointment } from "fbase";
 import { useMessage } from "hooks";
 import { useLoaderStore } from "store";
+import { Changed } from "types";
 
-export const useAddAppointment = () => {
-    const [added, setAdded] = useState<null | AppointmentModel>(null);
+export const useUpdateAppointment = () => {
+    const [changed, setChanged] = useState<Changed>(undefined);
     const showMessage = useMessage();
     const closeLoader = useLoaderStore.use.closeLoader();
     const openLoader = useLoaderStore.use.openLoader();
-
-    const initAddAppointment = useCallback((data: AppointmentModel) => {
-        setAdded(data);
+    const initUpdateAppointment = useCallback((changed: Changed) => {
+        setChanged(changed);
     }, []);
 
     const handleError = useCallback((err: any) => {
@@ -28,10 +27,11 @@ export const useAddAppointment = () => {
     }, []);
 
     useEffect(() => {
-        if (added) {
-            addAppointment(added, handleError, handleSuccess, handleInit);
+        if (changed) {
+            updateAppointment(changed, handleError, handleSuccess, handleInit);
         }
-    }, [added]);
-    return initAddAppointment;
+    }, [changed]);
+
+    return initUpdateAppointment;
 };
-export default useAddAppointment;
+export default useUpdateAppointment;

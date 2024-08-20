@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 
-import removeAppointment from "fbase/removeAppointment";
-import useMessage from "./useMessage";
+import { removeAppointment } from "fbase";
+import { useMessage } from "hooks";
 import { useLoaderStore } from "store";
 
 export const useRemoveAppointment = () => {

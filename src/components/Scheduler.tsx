@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import { AppointmentModel, ChangeSet, EditingState, IntegratedEditing, ViewState } from "@devexpress/dx-react-scheduler";
 import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Scheduler, DayView, Appointments, WeekView, ViewSwitcher, Toolbar, MonthView, AppointmentTooltip } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { useManageCurrentDate, useAddAppointment, useSubscribeAppointments } from "hooks";
+import { useManageCurrentDate, useAddAppointment, useSubscribeAppointments, useUpdateAppointment } from "hooks";
 import useRemoveAppointment from "hooks/useRemoveAppointment";
 
 const WellMarketingScheduler = () => {
@@ -11,14 +11,14 @@ const WellMarketingScheduler = () => {
     const appointments = useSubscribeAppointments();
     const initAddAppointment = useAddAppointment();
     const initRemoveAppointment = useRemoveAppointment();
-
-    console.log(appointments);
+    const initUpdateAppointment = useUpdateAppointment();
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
         if (added) {
             initAddAppointment(added as AppointmentModel);
         }
         if (changed) {
+            initUpdateAppointment(changed);
         }
         if (deleted !== undefined) {
             initRemoveAppointment(deleted.toString());

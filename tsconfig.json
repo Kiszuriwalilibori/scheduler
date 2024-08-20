@@ -20,7 +20,8 @@
             "fbase/*": ["fbase/*"],
             "components/*": ["components/*"],
             "hooks/*": ["hooks/*"],
-            "store/*": ["store/*"]
+            "store/*": ["store/*"],
+            "types/*": ["types/*"]
         }
     },
     "include": ["src"]

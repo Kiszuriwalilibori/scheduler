@@ -1,6 +1,6 @@
-// import addAppointment from "./addAppointment";
-import addAppointment from "./addAppointment";
-import firebase_app, { db } from "./config";
-import { appointmentConverter } from "./timestamp";
+import database from "./config";
+import appointmentConverter from "./converter";
+import removeAppointment from "./removeAppointment";
+import updateAppointment from "./updateAppointment";
 
-export { appointmentConverter, firebase_app, db };
+export { appointmentConverter, removeAppointment, updateAppointment, database };

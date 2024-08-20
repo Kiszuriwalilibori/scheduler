@@ -5,11 +5,11 @@ function isTimestamp(item: any): item is Timestamp {
     return Boolean((item as Timestamp).seconds);
 }
 
-export function dateToTimestamp(date: SchedulerDateTime) {
+function dateToTimestamp(date: SchedulerDateTime) {
     return date ? Timestamp.fromDate(new Date(date)) : date;
 }
 
-export function dateFromTimestamp(timestamp: Timestamp) {
+function dateFromTimestamp(timestamp: Timestamp) {
     return timestamp ? timestamp.toDate() : timestamp;
 }
 
@@ -29,6 +29,7 @@ export const appointmentConverter = {
         }
 
         return convertedAppointment as AppointmentModel;
-        // return { ...appointment, startDate: dateFromTimestamp(appointment.startDate), endDate: appointment.endDate ? dateFromTimestamp(appointment.endDate) : appointment.endDate, exDate: appointment.exDate ? dateFromTimestamp(appointment.exDate) : appointment.exDate };
     },
 };
+
+export default appointmentConverter;

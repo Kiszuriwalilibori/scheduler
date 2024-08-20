@@ -1,10 +1,11 @@
 import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "fbase";
+import { database } from "fbase";
+import { COLLECTION } from "config";
 
-export default async function removeAppointment(ID: string, handleSuccess: Function, handleError: Function, handleInit: Function) {
+export default async function removeAppointment(id: string, handleSuccess: Function, handleError: Function, handleInit: Function) {
     try {
         handleInit();
-        await deleteDoc(doc(db, "appointments", ID)).then(handleSuccess());
+        await deleteDoc(doc(database, COLLECTION, id)).then(handleSuccess());
     } catch (e) {
         handleError(e);
     }

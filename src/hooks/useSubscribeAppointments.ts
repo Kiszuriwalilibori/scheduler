@@ -1,15 +1,16 @@
 import { useEffect } from "react";
-import { getFirestore, collection } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 
-import { appointmentConverter, firebase_app } from "fbase";
+import { appointmentConverter, database } from "fbase";
 import { useMessage } from "hooks";
 import { useLoaderStore } from "store";
+import { COLLECTION } from "config";
 
 export const useSubscribeAppointments = () => {
     const setLoader = useLoaderStore.use.setLoader();
     const showMessage = useMessage();
-    const [value, loading, error] = useCollection(collection(getFirestore(firebase_app), "appointments"), {
+    const [value, loading, error] = useCollection(collection(database, COLLECTION), {
         snapshotListenOptions: { includeMetadataChanges: true },
     });
 
