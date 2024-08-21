@@ -5,6 +5,7 @@ import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Sche
 
 import { useManageCurrentDate, useAddAppointment, useRemoveAppointment, useSubscribeAppointments, useUpdateAppointment, useMessage } from "hooks";
 import { useConnectionStatusStore } from "store";
+import { validation } from "utils/validation";
 
 const LOCALE = "pl-PL";
 
@@ -20,12 +21,11 @@ const WellMarketingScheduler = () => {
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
         try {
             if (added && isOnline) {
-                if (added.startDate < new Date()) throw new Error("Nie można dodać wydarzenia z czasem utworzenia wcześniejszym niż aktualny");
-                if (!added.title) throw new Error("Zadanie musi mieć tytuł");
-                if (added.endDate && added.startDate > added.endDate) throw new Error("Czas zakończenia musi być późniejszy niż czas rozpoczęcia");
+                validation.added(added as AppointmentModel);
                 addAppointment(added as AppointmentModel);
             }
             if (changed && isOnline) {
+                validation.changed(changed);
                 updateAppointment(changed);
             }
             if (deleted && isOnline) {
