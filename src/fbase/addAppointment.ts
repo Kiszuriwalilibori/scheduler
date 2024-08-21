@@ -9,13 +9,14 @@ export async function addAppointment(data: AppointmentModel, handleError: Functi
 
     try {
         handleInit();
+
         await setDoc(doc(database, COLLECTION, id), data, {
             merge: true,
         }).then(() => {
             handleSuccess();
         });
     } catch (e) {
-        handleError();
+        handleError(e);
     }
 }
 

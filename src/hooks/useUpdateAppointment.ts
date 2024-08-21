@@ -16,7 +16,7 @@ export const useUpdateAppointment = () => {
 
     const handleError = useCallback((err: any) => {
         closeLoader();
-        showMessage.error(err);
+        showMessage.error(err.message || JSON.stringify(err));
     }, []);
 
     const handleSuccess = useCallback(() => {
