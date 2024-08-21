@@ -32,7 +32,7 @@ const WellMarketingScheduler = () => {
     }
 
     return (
-        <Paper>
+        <Paper elevation={1} sx={{ margin: "10vh auto", backgroundColor: "#f5f5f5", maxWidth: "1200px" }}>
             <Scheduler firstDayOfWeek={1} data={appointments} locale={LOCALE}>
                 <ViewState currentDate={currentDate} onCurrentDateChange={setDate} />
                 <EditingState onCommitChanges={handleChanges} />
