@@ -21,18 +21,20 @@ const WellMarketingScheduler = () => {
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
         try {
-            if (added && isOnline) {
-                validation.added(added as AppointmentModel);
-                addAppointment(added as AppointmentModel);
-            }
-            if (changed && isOnline) {
-                validation.changed(changed, appointments);
-                updateAppointment(changed);
-            }
-            if (deleted && isOnline) {
-                // eslint-disable-next-line no-restricted-globals
-                if (confirm("Jesteś bliski nieodwracalnego usunięcia zadania. Kontynuować? ")) {
-                    removeAppointment(deleted.toString());
+            if (isOnline) {
+                if (added) {
+                    validation.added(added as AppointmentModel);
+                    addAppointment(added as AppointmentModel);
+                }
+                if (changed) {
+                    validation.changed(changed, appointments);
+                    updateAppointment(changed);
+                }
+                if (deleted) {
+                    // eslint-disable-next-line no-restricted-globals
+                    if (confirm("Jesteś bliski nieodwracalnego usunięcia zadania. Kontynuować? ")) {
+                        removeAppointment(deleted.toString());
+                    }
                 }
             }
         } catch (err: any) {
