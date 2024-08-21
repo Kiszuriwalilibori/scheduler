@@ -23,7 +23,7 @@ export const useSubscribeAppointments = () => {
         ? value.docs.map(doc => {
               return appointmentConverter.fromFirestore(doc.data(), doc.id);
           })
-        : undefined;
+        : [];
 
     return appointments;
 };

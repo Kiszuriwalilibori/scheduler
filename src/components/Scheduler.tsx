@@ -25,7 +25,7 @@ const WellMarketingScheduler = () => {
                 addAppointment(added as AppointmentModel);
             }
             if (changed && isOnline) {
-                validation.changed(changed);
+                validation.changed(changed, appointments);
                 updateAppointment(changed);
             }
             if (deleted && isOnline) {
@@ -35,9 +35,6 @@ const WellMarketingScheduler = () => {
             showMessage.error(err.message || JSON.stringify(err));
         }
     };
-    if (!appointments) {
-        return null;
-    }
 
     return (
         <Paper elevation={1} sx={{ margin: "10vh auto", backgroundColor: "#f5f5f5", maxWidth: "1200px" }}>
