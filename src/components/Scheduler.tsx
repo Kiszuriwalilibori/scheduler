@@ -8,6 +8,7 @@ import { useConnectionStatusStore } from "store";
 import { validation } from "utils/validation";
 
 const LOCALE = "pl-PL";
+const COLOR_BACKGROUND = "#f5f5f5";
 
 const WellMarketingScheduler = () => {
     const showMessage = useMessage();
@@ -29,7 +30,10 @@ const WellMarketingScheduler = () => {
                 updateAppointment(changed);
             }
             if (deleted && isOnline) {
-                removeAppointment(deleted.toString());
+                // eslint-disable-next-line no-restricted-globals
+                if (confirm("Jesteś bliski nieodwracalnego usunięcia zadania. Kontynuować? ")) {
+                    removeAppointment(deleted.toString());
+                }
             }
         } catch (err: any) {
             showMessage.error(err.message || JSON.stringify(err));
@@ -37,7 +41,7 @@ const WellMarketingScheduler = () => {
     };
 
     return (
-        <Paper elevation={1} sx={{ margin: "10vh auto", backgroundColor: "#f5f5f5", maxWidth: "1200px" }}>
+        <Paper elevation={1} sx={{ margin: "10vh auto", backgroundColor: COLOR_BACKGROUND, maxWidth: "1200px" }}>
             <Scheduler firstDayOfWeek={1} data={appointments} locale={LOCALE}>
                 <ViewState currentDate={currentDate} onCurrentDateChange={setDate} />
                 <EditingState onCommitChanges={handleChanges} />
