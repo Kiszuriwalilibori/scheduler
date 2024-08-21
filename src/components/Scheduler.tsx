@@ -3,12 +3,13 @@ import Paper from "@mui/material/Paper";
 import { AppointmentModel, ChangeSet, EditingState, IntegratedEditing, ViewState } from "@devexpress/dx-react-scheduler";
 import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Scheduler, DayView, Appointments, WeekView, ViewSwitcher, Toolbar, MonthView, AppointmentTooltip } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { useManageCurrentDate, useAddAppointment, useRemoveAppointment, useSubscribeAppointments, useUpdateAppointment } from "hooks";
+import { useManageCurrentDate, useAddAppointment, useRemoveAppointment, useSubscribeAppointments, useUpdateAppointment, useMessage } from "hooks";
 import { useConnectionStatusStore } from "store";
 
 const LOCALE = "pl-PL";
 
 const WellMarketingScheduler = () => {
+    const showMessage = useMessage();
     const { currentDate, setDate } = useManageCurrentDate();
     const isOnline = useConnectionStatusStore.use.isOnline();
     const appointments = useSubscribeAppointments();
@@ -17,14 +18,21 @@ const WellMarketingScheduler = () => {
     const updateAppointment = useUpdateAppointment();
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
-        if (added && isOnline) {
-            addAppointment(added as AppointmentModel);
-        }
-        if (changed && isOnline) {
-            updateAppointment(changed);
-        }
-        if (deleted && isOnline) {
-            removeAppointment(deleted.toString());
+        try {
+            if (added && isOnline) {
+                if (added.startDate < new Date()) throw new Error("Nie można dodać wydarzenia z czasem utworzenia wcześniejszym niż aktualny");
+                if (!added.title) throw new Error("Zadanie musi mieć tytuł");
+                if (added.endDate && added.startDate > added.endDate) throw new Error("Czas zakończenia musi być późniejszy niż czas rozpoczęcia");
+                addAppointment(added as AppointmentModel);
+            }
+            if (changed && isOnline) {
+                updateAppointment(changed);
+            }
+            if (deleted && isOnline) {
+                removeAppointment(deleted.toString());
+            }
+        } catch (err: any) {
+            showMessage.error(err.message || JSON.stringify(err));
         }
     };
     if (!appointments) {

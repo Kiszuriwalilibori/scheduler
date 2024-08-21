@@ -23,10 +23,7 @@ export const useAddAppointment = () => {
     const handleSuccess = useCallback(() => {
         closeLoader();
     }, []);
-    const handleInit = useCallback((data: AppointmentModel) => {
-        if (data.startDate < new Date()) throw new Error("Nie można dodać wydarzenia z czasem utworzenia wcześniejszym niż aktualny");
-        if (!data.title) throw new Error("Zadanie musi mieć tytuł");
-        if (data.endDate && data.startDate > data.endDate) throw new Error("Czas zakończenia musi być późniejszy niż czas rozpoczęcia");
+    const handleInit = useCallback(() => {
         openLoader();
     }, []);
 

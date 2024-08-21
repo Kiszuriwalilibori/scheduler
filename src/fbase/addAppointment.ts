@@ -8,7 +8,7 @@ export async function addAppointment(data: AppointmentModel, handleError: Functi
     const id = Number(new Date()).toString();
 
     try {
-        handleInit(data);
+        handleInit();
         await setDoc(doc(database, COLLECTION, id), data, {
             merge: true,
         }).then(() => {
