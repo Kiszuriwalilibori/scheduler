@@ -26,12 +26,12 @@ const WellMarketingScheduler = () => {
             if (isOnline) {
                 if (added) {
                     const data = convertChangeSet.added(added);
-                    validation.added(data);
+                    validation.added && validation.added(data);
                     add(data);
                 }
                 if (changed) {
                     const data = convertChangeSet.changed(changed);
-                    validation.changed(data, appointments);
+                    validation.changed && validation.changed(data, appointments);
                     update(data);
                 }
                 if (deleted) {

@@ -1,6 +1,7 @@
 import { AppointmentModel, ChangeSet } from "@devexpress/dx-react-scheduler";
+import { ConvertChangeSet } from "types";
 
-export const convertChangeSet = {
+export const convertChangeSet: ConvertChangeSet = {
     added: (added: ChangeSet["added"]) => {
         return added as AppointmentModel;
     },

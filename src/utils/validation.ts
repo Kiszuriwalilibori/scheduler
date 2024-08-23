@@ -1,6 +1,7 @@
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
+import { Validation } from "types";
 
-export const validation = {
+export const validation: Partial<Validation> = {
     added: (added: AppointmentModel) => {
         if (added.startDate < new Date()) throw new Error("Nie można dodać wydarzenia z czasem utworzenia wcześniejszym niż aktualny");
         if (!added.title) throw new Error("Zadanie musi mieć tytuł");
