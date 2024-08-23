@@ -7,5 +7,6 @@ import useAddAppointment from "./useAddAppointment";
 import useRemoveAppointment from "./useRemoveAppointment";
 import useUpdateAppointment from "./useUpdateAppointment";
 import useHandleConnectionStatus from "./useHandleConnectionStatus";
+import useProcessAppointments from "./useProcessAppointments";
 
-export { useBoolean, useAddAppointment, useDelayedCondition, useHandleConnectionStatus, useManageCurrentDate, useMessage, useSubscribeAppointments, useRemoveAppointment, useUpdateAppointment };
+export { useBoolean, useAddAppointment, useDelayedCondition, useHandleConnectionStatus, useManageCurrentDate, useMessage, useSubscribeAppointments, useProcessAppointments, useRemoveAppointment, useUpdateAppointment };

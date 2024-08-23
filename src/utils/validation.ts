@@ -16,3 +16,5 @@ export const validation = {
         if (updated.endDate && updated.startDate > updated.endDate) throw new Error("Czas zakończenia musi być późniejszy niż czas rozpoczęcia");
     },
 };
+
+export default validation;

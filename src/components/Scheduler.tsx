@@ -3,9 +3,11 @@ import Paper from "@mui/material/Paper";
 import { AppointmentModel, ChangeSet, EditingState, IntegratedEditing, ViewState } from "@devexpress/dx-react-scheduler";
 import { AppointmentForm, CurrentTimeIndicator, DateNavigator, TodayButton, Scheduler, DayView, Appointments, WeekView, ViewSwitcher, Toolbar, MonthView, AppointmentTooltip } from "@devexpress/dx-react-scheduler-material-ui";
 
-import { useManageCurrentDate, useAddAppointment, useRemoveAppointment, useSubscribeAppointments, useUpdateAppointment, useMessage } from "hooks";
+import { useManageCurrentDate, useSubscribeAppointments, useMessage } from "hooks";
 import { useConnectionStatusStore } from "store";
-import { validation } from "utils/validation";
+import { validation, convertChangeSet } from "utils";
+import useProcessAppointment from "hooks/useProcessAppointments";
+import { Changed } from "types";
 
 const LOCALE = "pl-PL";
 const COLOR_BACKGROUND = "#f5f5f5";
@@ -15,25 +17,28 @@ const WellMarketingScheduler = () => {
     const { currentDate, setDate } = useManageCurrentDate();
     const isOnline = useConnectionStatusStore.use.isOnline();
     const appointments = useSubscribeAppointments();
-    const addAppointment = useAddAppointment();
-    const removeAppointment = useRemoveAppointment();
-    const updateAppointment = useUpdateAppointment();
+    const add = useProcessAppointment<AppointmentModel>("add");
+    const remove = useProcessAppointment<string>("remove");
+    const update = useProcessAppointment<Changed>("update");
 
     const handleChanges = ({ added, changed, deleted }: ChangeSet) => {
         try {
             if (isOnline) {
                 if (added) {
-                    validation.added(added as AppointmentModel);
-                    addAppointment(added as AppointmentModel);
+                    const data = convertChangeSet.added(added);
+                    validation.added(data);
+                    add(data);
                 }
                 if (changed) {
-                    validation.changed(changed, appointments);
-                    updateAppointment(changed);
+                    const data = convertChangeSet.changed(changed);
+                    validation.changed(data, appointments);
+                    update(data);
                 }
                 if (deleted) {
                     // eslint-disable-next-line no-restricted-globals
                     if (confirm("Jesteś bliski nieodwracalnego usunięcia zadania. Kontynuować? ")) {
-                        removeAppointment(deleted.toString());
+                        const data = convertChangeSet.deleted(deleted);
+                        remove(data);
                     }
                 }
             }
